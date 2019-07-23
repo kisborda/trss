@@ -1,0 +1,65 @@
+<resources>
+    <string name="app_name">Trss</string>
+
+    <!-- gombok -->
+    <string name="btnOkay_text_next">Tovább</string>
+    <string name="back">Vissza</string>
+    <string name="btnQuestion_text">Kérdés</string>
+    <string name="quit">Kilépés</string>
+    <string name="mainmenu">Főmenü</string>
+    <string name="newgame">Új játék kezdése</string>
+    <string name="btnStart">Játék indítása</string>
+
+    <!-- mező tag-ek -->
+    <string name="startTile_tag">0</string>
+    <string name="finishTile_tag">41</string>
+    <string name="tile_separator">99999</string>
+
+    <!-- statikus feliratok -->
+    <string name="active_player">Aktív játékos:</string>
+    <string name="player">Játékos:</string>
+    <string name="winner">Nyertes játékos</string>
+    <string name="participated">Játszottak:</string>
+    <string name="players_on_tile">Mezőn lévő játékosok:</string>
+    <string name="players_on_tile_default_text">Senki sincs ezen a mezőn</string>
+    <string name="number_of_players">Játékosok száma:</string>
+
+    <!-- játékosszám (radiobutton) -->
+    <string name="_4">4</string>
+    <string name="_3">3</string>
+    <string name="_2">2</string>
+    <string name="_1">1</string>
+
+    <!-- default játékos nevek -->
+    <string name="player4">Player4</string>
+    <string name="player3">Player3</string>
+    <string name="player2">Player2</string>
+    <string name="player1">Player1</string>
+
+    <!-- intentnél használt kulcsok -->
+    <string name="tile">tile</string>
+    <string name="players">players</string>
+    <string name="spec">spec</string>
+
+    <!-- Toast/Snackbar üzenetek -->
+    <string name="quit_message">Biztos ki akarsz lépni?</string>
+    <string name="wrong_answer">Rossz válasz</string>
+    <string name="use_button_message">Használd a gombot</string>
+    <string name="answer_question_message">Válaszold meg a kérdést!</string>
+
+    <!-- Mezők leírása -->
+    <string name="pink_details">Ha ezen a mezőn válaszolsz rosszul egy kérdésre, eggyel hátrébb kerülsz a pályán</string>
+    <string name="greenish_details">Szerencséd van! Ha jól válaszolsz a kérdésre, hármat léphetsz előre</string>
+    <string name="red_details">Ajjaj, ez itt egy piros mező. Ha helytelenül válaszolsz a kérdésre, kezdheted előlről a játékot.</string>
+    <string name="white_details">Ez az alapértelmezett mező típus, nincs semmilyen befolyásoló tulajdonsága, ha jól válaszolsz, egyet léphetsz előre, ha rosszul válaszolsz, nem mozdulsz.</string>
+
+    <string name="separator_in_file">;</string>
+
+    <string name="log_tag">aaaaaaaaaaaaaaaaaaaaaaa</string>
+
+    <!-- válaszok betűjelei -->
+    <string name="A">A</string>
+    <string name="B">B</string>
+    <string name="C">C</string>
+    <string name="D">D</string>
+</resources>

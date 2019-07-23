@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="10dp"
+    tools:context=".activities.UserActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="20dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <RadioGroup
+            android:id="@+id/rgPlayerCount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="20dp"
+                android:text="@string/number_of_players" />
+
+            <RadioButton
+                android:id="@+id/onePlayer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:text="@string/_1" />
+
+            <RadioButton
+                android:id="@+id/twoPlayer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:text="@string/_2" />
+
+            <RadioButton
+                android:id="@+id/threePlayer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:text="@string/_3" />
+
+            <RadioButton
+                android:id="@+id/fourPlayer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:text="@string/_4" />
+        </RadioGroup>
+
+        <Button
+            android:id="@+id/btnOkay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="30dp"
+            android:text="@string/btnOkay_text_next"
+            android:layout_gravity="center"
+            android:textAllCaps="false" />
+
+        <LinearLayout
+            android:id="@+id/llPlayerOne"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp"
+            android:padding="1dp"
+            android:background="@drawable/border"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_marginEnd="20dp"
+                android:layout_height="50dp"
+                android:layout_width="50dp"
+                android:adjustViewBounds="true"
+                android:src="@drawable/black_player_white" />
+
+            <EditText
+                android:id="@+id/etPlayerOneName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginEnd="10dp"
+                android:text="@string/player1" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/llPlayerTwo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp"
+            android:padding="1dp"
+            android:background="@drawable/border"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_marginEnd="20dp"
+                android:layout_height="50dp"
+                android:layout_width="50dp"
+                android:adjustViewBounds="true"
+                android:src="@drawable/blue_player_white" />
+
+            <EditText
+                android:id="@+id/etPlayerTwoName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginEnd="10dp"
+                android:text="@string/player2" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/llPlayerThree"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp"
+            android:padding="1dp"
+            android:background="@drawable/border"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_marginEnd="20dp"
+                android:layout_height="50dp"
+                android:layout_width="50dp"
+                android:adjustViewBounds="true"
+                android:src="@drawable/green_player_white" />
+
+            <EditText
+                android:id="@+id/etPlayerThreeName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginEnd="10dp"
+                android:text="@string/player3" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/llPlayerFour"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp"
+            android:padding="1dp"
+            android:background="@drawable/border"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_marginEnd="20dp"
+                android:layout_height="50dp"
+                android:layout_width="50dp"
+                android:adjustViewBounds="true"
+                android:src="@drawable/yellow_player_white" />
+
+            <EditText
+                android:id="@+id/etPlayerFourName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginEnd="10dp"
+                android:text="@string/player4" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btnStart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="30dp"
+        android:text="@string/btnStart"
+        android:textAllCaps="false"
+        android:textAppearance="@style/Widget.AppCompat.AutoCompleteTextView"
+        android:textSize="30sp" />
+</LinearLayout>
