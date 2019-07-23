@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -89,6 +90,10 @@ public class UserActivity extends AppCompatActivity {
                         setViewAndChildrenEnabled(layoutList.get(i), true);
                     }
                 } else {
+                    if (etPlayerOneName.getText().toString().equals(getString(R.string.cheat))) {
+                        PlayerManager.cheat = true;
+                        Toast.makeText(UserActivity.this, getString(R.string.cheater_message), Toast.LENGTH_SHORT).show();
+                    }
                     btnOkay.setText(getResources().getString(R.string.btnOkay_text_next));
 
                     for (LinearLayout layout : layoutList) {

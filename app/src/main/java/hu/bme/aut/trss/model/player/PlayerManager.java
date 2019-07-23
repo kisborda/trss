@@ -10,6 +10,7 @@ public class PlayerManager {
     private static int activePlayer = 0;            // a listában való indexe
     public static Player winner;
     //public static List<Player> finished;            // abban a sorrendben kerülnek majd a listába, ahogy célbaértek, egyelőre nincs használva, lehet teljesen kiváltja majd a winner tagváltozót
+    public static boolean cheat = false;
 
     public static Player getActivePlayer() {
         return players.get(activePlayer);

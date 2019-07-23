@@ -62,4 +62,8 @@
     <string name="B">B</string>
     <string name="C">C</string>
     <string name="D">D</string>
+
+    <!-- cheat -->
+    <string name="cheat">cHe4t3R</string>
+    <string name="cheater_message">You are a cheater!</string>
 </resources>

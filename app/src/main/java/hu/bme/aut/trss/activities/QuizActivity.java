@@ -49,8 +49,9 @@ public class QuizActivity extends AppCompatActivity {
         buttonsMap.put(getString(R.string.C), btnC);
         buttonsMap.put(getString(R.string.D), btnD);
 
-        // hogy lehessen tesztelni, és ne kelljen ténylegesen tudni a választ
-        Log.i(getResources().getString(R.string.log_tag), question.getAnswer());
+        if (PlayerManager.cheat) {
+            Toast.makeText(QuizActivity.this, question.getAnswer(), Toast.LENGTH_SHORT).show();
+        }
 
         tvPlayerName.setText(PlayerManager.getActivePlayer().getName());
         tvQuestion.setText(question.getQuestion());
