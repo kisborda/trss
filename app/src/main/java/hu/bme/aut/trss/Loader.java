@@ -10,8 +10,8 @@ import java.io.InputStreamReader;
 import java.util.List;
 import java.util.Vector;
 
-import hu.bme.aut.trss.data.question.Question;
-import hu.bme.aut.trss.data.question.QuestionManager;
+import hu.bme.aut.trss.model.question.Question;
+import hu.bme.aut.trss.model.question.QuestionManager;
 
 public class Loader {
     /**

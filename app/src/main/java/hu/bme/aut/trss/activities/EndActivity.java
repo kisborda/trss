@@ -8,7 +8,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import hu.bme.aut.trss.R;
-import hu.bme.aut.trss.data.player.PlayerManager;
+import hu.bme.aut.trss.model.player.PlayerManager;
 
 /**
  * Eredményhirdetés

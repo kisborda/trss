@@ -15,8 +15,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import hu.bme.aut.trss.R;
-import hu.bme.aut.trss.data.player.Player;
-import hu.bme.aut.trss.data.player.PlayerManager;
+import hu.bme.aut.trss.model.player.Player;
+import hu.bme.aut.trss.model.player.PlayerManager;
 
 /**
  * Játékosok hozzáadását megvalósító activity

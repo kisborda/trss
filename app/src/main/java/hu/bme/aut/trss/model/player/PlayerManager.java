@@ -1,4 +1,4 @@
-package hu.bme.aut.trss.data.player;
+package hu.bme.aut.trss.model.player;
 
 import java.util.List;
 

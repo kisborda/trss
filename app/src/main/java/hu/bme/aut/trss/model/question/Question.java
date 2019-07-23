@@ -1,4 +1,4 @@
-package hu.bme.aut.trss.data.question;
+package hu.bme.aut.trss.model.question;
 
 /**
  * Kérdést modellezi

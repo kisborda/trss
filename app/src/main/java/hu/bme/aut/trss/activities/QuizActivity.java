@@ -15,9 +15,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 import hu.bme.aut.trss.R;
-import hu.bme.aut.trss.data.player.PlayerManager;
-import hu.bme.aut.trss.data.question.Question;
-import hu.bme.aut.trss.data.question.QuestionManager;
+import hu.bme.aut.trss.model.player.PlayerManager;
+import hu.bme.aut.trss.model.question.Question;
+import hu.bme.aut.trss.model.question.QuestionManager;
 
 /**
  * Kvíz

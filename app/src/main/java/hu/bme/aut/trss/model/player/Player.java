@@ -1,6 +1,6 @@
-package hu.bme.aut.trss.data.player;
+package hu.bme.aut.trss.model.player;
 
-import hu.bme.aut.trss.data.tile.Tile;
+import hu.bme.aut.trss.model.tile.Tile;
 
 /**
  * A játékost modellezi.

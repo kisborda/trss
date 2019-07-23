@@ -1,11 +1,11 @@
-package hu.bme.aut.trss.data.tile;
+package hu.bme.aut.trss.model.tile;
 
 import android.widget.ImageView;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import hu.bme.aut.trss.data.player.Player;
+import hu.bme.aut.trss.model.player.Player;
 
 /**
  * Játékmezőt modellezi
