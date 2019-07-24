@@ -28,6 +28,7 @@ public class UserActivity extends AppCompatActivity {
     private Integer playerCount;
     private Button btnStart, btnOkay;
     private EditText etPlayerOneName, etPlayerTwoName, etPlayerThreeName, etPlayerFourName;
+    private List<EditText> etList;
     private List<LinearLayout> layoutList;
     private Player player1 = null;
     private Player player2 = null;
@@ -59,6 +60,12 @@ public class UserActivity extends AppCompatActivity {
         etPlayerTwoName = findViewById(R.id.etPlayerTwoName);
         etPlayerThreeName = findViewById(R.id.etPlayerThreeName);
         etPlayerFourName = findViewById(R.id.etPlayerFourName);
+
+        etList = new ArrayList<>();
+        etList.add(etPlayerOneName);
+        etList.add(etPlayerTwoName);
+        etList.add(etPlayerThreeName);
+        etList.add(etPlayerFourName);
 
         rgPlayerCount = findViewById(R.id.rgPlayerCount);
 
@@ -109,8 +116,7 @@ public class UserActivity extends AppCompatActivity {
         btnStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /* TODO ne lehessen ugyanazt a nevet megadni több játékosnak
-                *   illetve ha üres, akkor legyen default */
+                boolean sameName = false;
 
                 player1 = new Player(R.drawable.black_player_white, etPlayerOneName.getText().toString());
                 player2 = new Player(R.drawable.blue_player_white, etPlayerTwoName.getText().toString());
@@ -123,14 +129,32 @@ public class UserActivity extends AppCompatActivity {
                 playerList.add(player3);
                 playerList.add(player4);
 
+                for (int i = 0; i < playerList.size(); i++) {
+                    Integer num = i + 1;
+                    String name = getString(R.string.default_namebase) + num.toString();
+                    if (etList.get(i).getText().toString().equals("")) {
+                        etList.get(i).setText(name);
+                        playerList.get(i).setName(name);
+                    }
+                    for (int j = i; j < playerList.size(); j++) {
+                        if (i != j && playerList.get(i).getName().equals(playerList.get(j).getName())) {
+                            sameName = true;
+                        }
+                    }
+                }
+
                 PlayerManager.players = new ArrayList<>();
 
                 for (int i = 0; i < playerCount; i++) {
                     PlayerManager.players.add(playerList.get(i));
                 }
 
-                Intent intent = new Intent(UserActivity.this, MapActivity.class);
-                startActivity(intent);
+                if (sameName) {
+                    Toast.makeText(UserActivity.this, getString(R.string.unique_names_message), Toast.LENGTH_SHORT).show();
+                } else {
+                    Intent intent = new Intent(UserActivity.this, MapActivity.class);
+                    startActivity(intent);
+                }
             }
         });
     }

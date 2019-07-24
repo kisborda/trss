@@ -35,6 +35,7 @@
     <string name="player3">Player3</string>
     <string name="player2">Player2</string>
     <string name="player1">Player1</string>
+    <string name="default_namebase">Player</string>
 
     <!-- intentnél használt kulcsok -->
     <string name="tile">tile</string>
@@ -42,6 +43,7 @@
     <string name="spec">spec</string>
 
     <!-- Toast/Snackbar üzenetek -->
+    <string name="unique_names_message">Nevek nem lehetnek azonosak!</string>
     <string name="quit_message">Biztos ki akarsz lépni?</string>
     <string name="wrong_answer">Rossz válasz</string>
     <string name="use_button_message">Használd a gombot</string>
