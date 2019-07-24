@@ -90,7 +90,7 @@ public class UserActivity extends AppCompatActivity {
                         setViewAndChildrenEnabled(layoutList.get(i), true);
                     }
                 } else {
-                    if (etPlayerOneName.getText().toString().equals(getString(R.string.cheat))) {
+                    if (!PlayerManager.cheat && etPlayerOneName.getText().toString().equals(getString(R.string.cheat))) {
                         PlayerManager.cheat = true;
                         Toast.makeText(UserActivity.this, getString(R.string.cheater_message), Toast.LENGTH_SHORT).show();
                     }
@@ -109,6 +109,9 @@ public class UserActivity extends AppCompatActivity {
         btnStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                /* TODO ne lehessen ugyanazt a nevet megadni több játékosnak
+                *   illetve ha üres, akkor legyen default */
+
                 player1 = new Player(R.drawable.black_player_white, etPlayerOneName.getText().toString());
                 player2 = new Player(R.drawable.blue_player_white, etPlayerTwoName.getText().toString());
                 player3 = new Player(R.drawable.green_player_white, etPlayerThreeName.getText().toString());

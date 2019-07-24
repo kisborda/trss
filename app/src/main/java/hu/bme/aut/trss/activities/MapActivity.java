@@ -30,8 +30,8 @@ public class MapActivity extends AppCompatActivity {
     private Object tag;
     private TextView tvPlayerName;
     private Tile activeTile = null;
-    private Player activePlayer = null;
-    private boolean tile = false;
+    private boolean afterQuiz = false;
+    private boolean end = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,12 +103,12 @@ public class MapActivity extends AppCompatActivity {
 
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // teszteléshez...
-        // map.get(25).setSpec(R.drawable.finish_empty);
+        //map.get(24).setSpec(R.drawable.finish_empty);
+        //map.get(24).getImageView().setTag(getString(R.string.finishTile_tag));
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         for (Tile tile : map) {
             tile.setNextTile(selectTile(tile.getTag() + 1));
-
             tile.getImageView().setImageResource(tile.getSpec());
         }
 
@@ -125,6 +125,7 @@ public class MapActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 activeTile = PlayerManager.getActivePlayer().getCurrentTile();
+                afterQuiz = true;
 
                 Intent intent = new Intent(MapActivity.this, QuizActivity.class);
                 intent.putExtra(getResources().getString(R.string.tile), activeTile.getSpec());
@@ -137,9 +138,10 @@ public class MapActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-        if (tile) {                             // ha csak a részletes nézetből jön vissza, akkor nem kell csinálni semmit sem
-            tile = false;
-        } else {
+        /* csak akkor, ha QuizActivity-ről jövünk vissza */
+        if (afterQuiz) {
+            afterQuiz = false;
+
             /* van következő mező, ahova lehet lépni */
             if (activeTile.getNextTile() != null) {
                 int spec = activeTile.getSpec();
@@ -163,15 +165,12 @@ public class MapActivity extends AppCompatActivity {
 
                         activeTile = activeTile.getNextTile();
                     }
-                    if (activeTile.getImageView().getTag() == getString(R.string.finishTile_tag)) {
-                        PlayerManager.winner = activePlayer;
-
-                        /* TODO finish-t rendesen megcsinálni,
-                            jelenleg az első célbaérő játékossal végetér az egész játék */
-
-                        Intent intent = new Intent(MapActivity.this, EndActivity.class);
-                        startActivity(intent);
-                        MapActivity.this.finish();
+                    if (activeTile.getImageView().getTag() == getString(R.string.finishTile_tag) || activeTile.getSpec() == R.drawable.finish_empty) {
+                        if (PlayerManager.finished(PlayerManager.getActivePlayer())) {
+                            end = true;
+                            Intent intent = new Intent(MapActivity.this, EndActivity.class);
+                            startActivity(intent);
+                        }
                     } else {
                         stepper(PlayerManager.getActivePlayer(), activeTile);
 
@@ -191,15 +190,13 @@ public class MapActivity extends AppCompatActivity {
                 }
             }
 
-            if (activePlayer != null) {
-                PlayerManager.getNextPlayer().setCorrect(false);
-            } else {
-                activePlayer = PlayerManager.getActivePlayer();
-            }
+            PlayerManager.nextPlayer();
         }
 
-        map.get(0).getImageView().setImageResource(getStartPicture(map.get(0)));
-        tvPlayerName.setText(PlayerManager.getActivePlayer().getName());
+        if (!end) {
+            map.get(0).getImageView().setImageResource(getStartPicture(map.get(0)));
+            tvPlayerName.setText(PlayerManager.getActivePlayer().getName());
+        }
     }
 
     @Override
@@ -213,6 +210,12 @@ public class MapActivity extends AppCompatActivity {
         }).setActionTextColor(Color.RED).show();
     }
 
+    /**
+     * Játékost lépteti mezőre
+     *
+     * @param whom  őt kell léptetni
+     * @param where erre a mezőre
+     */
     private void stepper(Player whom, Tile where) {
         where.addPlayer(whom);
         whom.setCurrentTile(where);
@@ -430,10 +433,10 @@ public class MapActivity extends AppCompatActivity {
                 }
             }
 
-            Log.i(getResources().getString(R.string.log_tag), "klikkelt mező " + tag);
+            //Log.i(getResources().getString(R.string.log_tag), "klikkelt mező " + tag);
 
             if (clickedTile.getNextTile() != null) {
-                Log.i(getResources().getString(R.string.log_tag), "következő mező " + clickedTile.getNextTile().getTag());
+                //Log.i(getResources().getString(R.string.log_tag), "következő mező " + clickedTile.getNextTile().getTag());
 
                 Intent intent = new Intent(MapActivity.this, TileActivity.class);
                 intent.putExtra(getResources().getString(R.string.spec), clickedTile.getSpec());
@@ -448,7 +451,6 @@ public class MapActivity extends AppCompatActivity {
                     }
                 }
                 intent.putExtra(getResources().getString(R.string.players), plyrs);
-                tile = true;
                 startActivity(intent);
             }
         }

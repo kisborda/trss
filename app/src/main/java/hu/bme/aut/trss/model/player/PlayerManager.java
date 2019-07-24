@@ -1,29 +1,64 @@
 package hu.bme.aut.trss.model.player;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Játékosokat menedzseli, kinek a fordulója aktív, ki következik
  */
 public class PlayerManager {
-    public static List<Player> players;             // összes játékos
-    private static int activePlayer = 0;            // a listában való indexe
-    public static Player winner;
-    //public static List<Player> finished;            // abban a sorrendben kerülnek majd a listába, ahogy célbaértek, egyelőre nincs használva, lehet teljesen kiváltja majd a winner tagváltozót
+    public static List<Player> players;                     // összes játékos
+    private static int activePlayerIndex = 0;               // a listában való indexe
+    private static List<Player> finished;                   // célbaért játékosok
     public static boolean cheat = false;
 
+    /**
+     * Aktív játékost adja meg.
+     *
+     * @return Aktív játékos
+     */
     public static Player getActivePlayer() {
-        return players.get(activePlayer);
+        return players.get(activePlayerIndex);
     }
 
-    public static Player getNextPlayer() {
-        activePlayer++;
-        if (activePlayer < players.size()) {
-            return players.get(activePlayer);
-        } else {
-            activePlayer = 0;
-            return players.get(players.size() - 1);
+    /**
+     * Váltás a következő játékosra
+     */
+    public static void nextPlayer() {
+        activePlayerIndex++;
+        if (activePlayerIndex >= players.size()) {
+            activePlayerIndex = 0;
         }
     }
 
+    /**
+     * Célbaérő játékos feljegyzése, és annak vizsgálata, hogy van-e még további játékos
+     *
+     * @param player A célbaérő játékos
+     * @return Az összes játékos célba ért-e
+     */
+    public static boolean finished(Player player) {
+        if (finished == null || finished.isEmpty()) {
+            finished = new ArrayList<>();
+        }
+
+        finished.add(player);
+        players.remove(player);
+
+        if (activePlayerIndex == 0) {
+            activePlayerIndex = players.size() - 1;
+        } else {
+            activePlayerIndex--;
+        }
+        return players.isEmpty();
+    }
+
+    /**
+     * A végeredmény lista elkérése
+     *
+     * @return Lista a játékosok helyezéseinek megfelelő sorrendben
+     */
+    public static List<Player> getFinishers() {
+        return finished;
+    }
 }

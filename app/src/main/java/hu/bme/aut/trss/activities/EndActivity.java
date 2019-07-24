@@ -7,13 +7,17 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.util.List;
+
 import hu.bme.aut.trss.R;
+import hu.bme.aut.trss.model.player.Player;
 import hu.bme.aut.trss.model.player.PlayerManager;
 
 /**
  * Eredményhirdetés
  */
 public class EndActivity extends AppCompatActivity {
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -21,30 +25,31 @@ public class EndActivity extends AppCompatActivity {
 
         Button btnMenu = findViewById(R.id.btnMenu);
         TextView tvWinner = findViewById(R.id.tvWinner);
-        TextView tvPlayer1 = findViewById(R.id.tvPlayer1);
-        TextView tvPlayer2 = findViewById(R.id.tvPlayer2);
-        TextView tvPlayer3 = findViewById(R.id.tvPlayer3);
-        TextView tvPlayer4 = findViewById(R.id.tvPlayer4);
+        TextView tvFirst = findViewById(R.id.tvPlayer1);
+        TextView tvSecond = findViewById(R.id.tvPlayer2);
+        TextView tvThird = findViewById(R.id.tvPlayer3);
+        TextView tvFourth = findViewById(R.id.tvPlayer4);
 
-        tvWinner.setText(PlayerManager.winner.getName());
+        List<Player> result = PlayerManager.getFinishers();
 
-        tvPlayer1.setText(PlayerManager.players.get(0).getName());
-        tvPlayer1.setTextColor(getResources().getColor(R.color.black));
+        tvWinner.setText(result.get(0).getName());
 
-        if (PlayerManager.players.size() > 1) {
-            if (PlayerManager.players.get(1) != null) {
-                tvPlayer2.setText(PlayerManager.players.get(1).getName());
-                tvPlayer2.setTextColor(getResources().getColor(R.color.blue));
-            }
-            if (PlayerManager.players.get(2) != null) {
-                tvPlayer3.setText(PlayerManager.players.get(2).getName());
-                tvPlayer3.setTextColor(getResources().getColor(R.color.green));
-            }
-            if (PlayerManager.players.get(3) != null) {
-                tvPlayer4.setText(PlayerManager.players.get(3).getName());
-                tvPlayer4.setTextColor(getResources().getColor(R.color.yellow));
-            }
+        tvFirst.setText(result.get(0).getName());
+        tvFirst.setTextColor(result.get(0).getResId());
+
+        if (result.size() > 1) {
+            tvSecond.setText(result.get(1).getName());
+            tvSecond.setTextColor(result.get(1).getResId());
         }
+        if (result.size() > 2) {
+            tvThird.setText(result.get(2).getName());
+            tvThird.setTextColor(result.get(2).getResId());
+        }
+        if (result.size() > 3) {
+            tvFourth.setText(result.get(3).getName());
+            tvFourth.setTextColor(result.get(3).getResId());
+        }
+
 
         btnMenu.setOnClickListener(new View.OnClickListener() {
             @Override

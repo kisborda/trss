@@ -19,7 +19,7 @@
     <string name="active_player">Aktív játékos:</string>
     <string name="player">Játékos:</string>
     <string name="winner">Nyertes játékos</string>
-    <string name="participated">Játszottak:</string>
+    <string name="participated">Helyezés:</string>
     <string name="players_on_tile">Mezőn lévő játékosok:</string>
     <string name="players_on_tile_default_text">Senki sincs ezen a mezőn</string>
     <string name="number_of_players">Játékosok száma:</string>
@@ -64,6 +64,6 @@
     <string name="D">D</string>
 
     <!-- cheat -->
-    <string name="cheat">cHe4t3R</string>
+    <string name="cheat">cheating</string>
     <string name="cheater_message">You are a cheater!</string>
 </resources>
