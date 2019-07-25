@@ -54,6 +54,8 @@
     <string name="greenish_details">Szerencséd van! Ha jól válaszolsz a kérdésre, hármat léphetsz előre</string>
     <string name="red_details">Ajjaj, ez itt egy piros mező. Ha helytelenül válaszolsz a kérdésre, kezdheted előlről a játékot.</string>
     <string name="white_details">Ez az alapértelmezett mező típus, nincs semmilyen befolyásoló tulajdonsága, ha jól válaszolsz, egyet léphetsz előre, ha rosszul válaszolsz, nem mozdulsz.</string>
+    <string name="start_tile_details">Start mező.\nJó játékot!</string>
+    <string name="finish_tile_details">Gratulálok a célbaérteknek!</string>
 
     <string name="separator_in_file">;</string>
 
@@ -67,5 +69,5 @@
 
     <!-- cheat -->
     <string name="cheat">cheating</string>
-    <string name="cheater_message">You are a cheater!</string>
+    <string name="cheater_message">Cheat mode activated!</string>
 </resources>

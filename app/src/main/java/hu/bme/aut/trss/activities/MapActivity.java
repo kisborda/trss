@@ -71,10 +71,8 @@ public class MapActivity extends AppCompatActivity {
                 ImageView imageView = (ImageView) tableRow.getChildAt(j);
 
                 if (!imageView.getTag().toString().equals(getString(R.string.tile_separator))) {
-                    if (!tableRow.getChildAt(j).getTag().toString().equals(getString(R.string.startTile_tag)) && !tableRow.getChildAt(j).getTag().toString().equals(getString(R.string.finishTile_tag))) {
-                        imageView.setOnTouchListener(touchListener);
-                        imageView.setOnClickListener(clickListener);
-                    }
+                    imageView.setOnTouchListener(touchListener);
+                    imageView.setOnClickListener(clickListener);
 
                     boolean add = true;
                     int id = Integer.parseInt(imageView.getTag().toString());
@@ -98,14 +96,8 @@ public class MapActivity extends AppCompatActivity {
         }
 
         // ehelyett mindre mehetne egy setspec, vagy megoldani, hogy ne legyen szükség erre a két sorra sem
-        map.get(0).setSpec(getStartPicture(map.get(0)));
-        map.get(5).setSpec(R.drawable.finish_empty);
-
-        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        // teszteléshez...
-        //map.get(24).setSpec(R.drawable.finish_empty);
-        //map.get(24).getImageView().setTag(getString(R.string.finishTile_tag));
-        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        map.get(0).setSpec(getStartOrFinishPicture(map.get(0)));
+        map.get(5).setSpec(getStartOrFinishPicture(map.get(5)));
 
         for (Tile tile : map) {
             tile.setNextTile(selectTile(tile.getTag() + 1));
@@ -116,8 +108,7 @@ public class MapActivity extends AppCompatActivity {
             activeTile = map.get(0);
 
             for (Player player : PlayerManager.players) {
-                player.setCurrentTile(activeTile);
-                activeTile.addPlayer(player);
+                stepper(player, activeTile);
             }
         }
 
@@ -138,6 +129,8 @@ public class MapActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
+        activeTile = PlayerManager.getActivePlayer().getCurrentTile();
+
         /* csak akkor, ha QuizActivity-ről jövünk vissza */
         if (afterQuiz) {
             afterQuiz = false;
@@ -148,35 +141,30 @@ public class MapActivity extends AppCompatActivity {
 
                 /* helyes válasz */
                 if (PlayerManager.getActivePlayer().isCorrect()) {
+                    activeTile.removePlayer(PlayerManager.getActivePlayer());
+
+                    setImageForActiveTile();
+
                     if (spec == R.drawable.greenish) {
-                        activeTile.removePlayer(PlayerManager.getActivePlayer());
-
-                        setImageForActiveTile();
-
                         for (int i = 0; i < 3; i++) {
                             if (activeTile.getNextTile() != null) {                             // elvileg nem lehetne null Tile sehol, de nem merem kivenni, hátha elnéztem valamit
                                 activeTile = activeTile.getNextTile();
                             }
                         }
                     } else {
-                        activeTile.removePlayer(PlayerManager.getActivePlayer());
-
-                        setImageForActiveTile();
-
                         activeTile = activeTile.getNextTile();
                     }
-                    if (activeTile.getImageView().getTag() == getString(R.string.finishTile_tag) || activeTile.getSpec() == R.drawable.finish_empty) {
+
+                    stepper(PlayerManager.getActivePlayer(), activeTile);
+
+                    setImageForActiveTile();
+
+                    if (activeTile.getImageView().getTag() == getString(R.string.finishTile_tag)) {
                         if (PlayerManager.finished(PlayerManager.getActivePlayer())) {
                             end = true;
-                            Intent intent = new Intent(MapActivity.this, EndActivity.class);
-                            startActivity(intent);
                         }
-                    } else {
-                        stepper(PlayerManager.getActivePlayer(), activeTile);
-
-                        setImageForActiveTile();
                     }
-                }       /* helytelen válasz */ else {
+                } else {        /* helytelen válasz */
                     activeTile.removePlayer(PlayerManager.getActivePlayer());
                     setImageForActiveTile();
                     if (spec == R.drawable.pink) {
@@ -190,13 +178,40 @@ public class MapActivity extends AppCompatActivity {
                 }
             }
 
-            PlayerManager.nextPlayer();
+            if (!PlayerManager.players.isEmpty()) {
+                PlayerManager.nextPlayer();
+                activeTile = PlayerManager.getActivePlayer().getCurrentTile();
+            }
         }
 
-        if (!end) {
-            map.get(0).getImageView().setImageResource(getStartPicture(map.get(0)));
+        if (end) {
+            Intent intent = new Intent(MapActivity.this, EndActivity.class);
+            startActivity(intent);
+        } else {
+            map.get(0).getImageView().setImageResource(getStartOrFinishPicture(map.get(0)));
+            map.get(5).getImageView().setImageResource(getStartOrFinishPicture(map.get(5)));
             tvPlayerName.setText(PlayerManager.getActivePlayer().getName());
         }
+
+
+        if (PlayerManager.players != null) {
+            for (Player player : PlayerManager.players) {
+                String msg = player.getName() + "- mezőtag: " + player.getCurrentTile().getTag().toString();
+                Log.i(getString(R.string.log_tag), msg);
+            }
+        }
+        if (PlayerManager.getFinishers() != null) {
+            for (Player player : PlayerManager.getFinishers()) {
+                String msg = player.getName() + "- mezőtag: " + player.getCurrentTile().getTag().toString();
+                Log.i(getString(R.string.log_tag), msg);
+            }
+        }
+        if (map.get(24).getPlayers() != null) {
+            for (Player player : map.get(24).getPlayers()) {
+                Log.i(getString(R.string.log_tag), player.getName());
+            }
+        }
+
     }
 
     @Override
@@ -244,20 +259,37 @@ public class MapActivity extends AppCompatActivity {
         return ret;
     }
 
-    // TODO getStartPicture()-t valahogy beolvasztani a setImageForActiveTile() függvénybe
-    private int getStartPicture(Tile tile) {
-        if (tile.getPlayers() == null) {
-            return R.drawable.start_empty;
+    // TODO getStartOrFinishPicture()-t valahogy beolvasztani a setImageForActiveTile() függvénybe
+    private int getStartOrFinishPicture(Tile tile) {
+        if (tile.getTag().toString().equals("0")) {
+            if (tile.getPlayers() == null) {
+                return R.drawable.start_empty;
+            } else {
+                switch (tile.getPlayers().size()) {
+                    case 1:
+                        return R.drawable.start_1p;
+                    case 2:
+                        return R.drawable.start_2p;
+                    case 3:
+                        return R.drawable.start_3p;
+                    default:
+                        return R.drawable.start_4p;
+                }
+            }
         } else {
-            switch (tile.getPlayers().size()) {
-                case 1:
-                    return R.drawable.start_1p;
-                case 2:
-                    return R.drawable.start_2p;
-                case 3:
-                    return R.drawable.start_3p;
-                default:
-                    return R.drawable.start_4p;
+            if (tile.getPlayers() == null) {
+                return R.drawable.finish_empty;
+            } else {
+                switch (tile.getPlayers().size()) {
+                    case 1:
+                        return R.drawable.finish_1p;
+                    case 2:
+                        return R.drawable.finish_2p;
+                    case 3:
+                        return R.drawable.finish_3p;
+                    default:
+                        return R.drawable.finish_4p;
+                }
             }
         }
     }
@@ -268,7 +300,7 @@ public class MapActivity extends AppCompatActivity {
     private void setImageForActiveTile() {
         if (activeTile.getPlayers() == null) {
             activeTile.getImageView().setImageResource(activeTile.getSpec());
-        } else {
+        } else if (!activeTile.getPlayers().isEmpty()) {
             switch (activeTile.getSpec()) {
                 case R.drawable.white:
                     switch (activeTile.getPlayers().size()) {
@@ -389,16 +421,16 @@ public class MapActivity extends AppCompatActivity {
                 default:
                     switch (activeTile.getPlayers().size()) {
                         case 2:
-                            activeTile.getImageView().setImageResource(R.drawable.start_2p);
+                            activeTile.getImageView().setImageResource(getStartOrFinishPicture(activeTile));
                             break;
                         case 3:
-                            activeTile.getImageView().setImageResource(R.drawable.start_3p);
+                            activeTile.getImageView().setImageResource(getStartOrFinishPicture(activeTile));
                             break;
                         case 4:
-                            activeTile.getImageView().setImageResource(R.drawable.start_4p);
+                            activeTile.getImageView().setImageResource(getStartOrFinishPicture(activeTile));
                             break;
                         default:
-                            activeTile.getImageView().setImageResource(R.drawable.start_1p);
+                            activeTile.getImageView().setImageResource(getStartOrFinishPicture(activeTile));
                             break;
                     }
                     break;
@@ -425,7 +457,7 @@ public class MapActivity extends AppCompatActivity {
 
             int ID = Integer.parseInt(tag.toString());
 
-            Tile clickedTile = map.get(1);
+            Tile clickedTile = map.get(0);
 
             for (Tile tile : map) {
                 if (tile.getTag().equals(ID)) {
@@ -434,25 +466,24 @@ public class MapActivity extends AppCompatActivity {
             }
 
             //Log.i(getResources().getString(R.string.log_tag), "klikkelt mező " + tag);
+            //Log.i(getResources().getString(R.string.log_tag), "következő mező " + clickedTile.getNextTile().getTag());
 
-            if (clickedTile.getNextTile() != null) {
-                //Log.i(getResources().getString(R.string.log_tag), "következő mező " + clickedTile.getNextTile().getTag());
-
-                Intent intent = new Intent(MapActivity.this, TileActivity.class);
+            Intent intent = new Intent(MapActivity.this, TileActivity.class);
+            if (clickedTile.getTag().toString().equals(getString(R.string.startTile_tag)) || clickedTile.getTag().toString().equals(getString(R.string.finishTile_tag))) {
+                intent.putExtra(getResources().getString(R.string.spec), clickedTile.getTag());
+            } else {
                 intent.putExtra(getResources().getString(R.string.spec), clickedTile.getSpec());
-                String[] plyrs = new String[4];
-                if (clickedTile.getPlayers() == null) {
-                    for (int i = 0; i < 4; i++) {
-                        plyrs[i] = null;
-                    }
-                } else {
-                    for (int i = 0; i < clickedTile.getPlayers().size(); i++) {
-                        plyrs[i] = clickedTile.getPlayers().get(i).getName();
-                    }
-                }
-                intent.putExtra(getResources().getString(R.string.players), plyrs);
-                startActivity(intent);
             }
+            String[] plyrs = null;
+            if (clickedTile.getPlayers() != null) {
+                plyrs = new String[clickedTile.getPlayers().size()];
+                for (int i = 0; i < clickedTile.getPlayers().size(); i++) {
+                    plyrs[i] = clickedTile.getPlayers().get(i).getName();
+                }
+            }
+            intent.putExtra(getResources().getString(R.string.players), plyrs);
+            startActivity(intent);
+
         }
     };
 }

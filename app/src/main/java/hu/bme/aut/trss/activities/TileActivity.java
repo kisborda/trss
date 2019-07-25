@@ -8,6 +8,9 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import hu.bme.aut.trss.R;
 
 /**
@@ -27,21 +30,20 @@ public class TileActivity extends AppCompatActivity {
         TextView tvPlayer4 = findViewById(R.id.tvPlayer4);
         Button btnBack = findViewById(R.id.btnBack);
 
+        List<TextView> tvList = new ArrayList<>();
+        tvList.add(tvPlayer1);
+        tvList.add(tvPlayer2);
+        tvList.add(tvPlayer3);
+        tvList.add(tvPlayer4);
+
         Intent intent = getIntent();
-        int spec = intent.getIntExtra(getResources().getString(R.string.spec), 0);
+        int spec = intent.getIntExtra(getResources().getString(R.string.spec), R.drawable.white);
         String[] players = intent.getStringArrayExtra(getResources().getString(R.string.players));
 
-        if (players[0] != null) {
-            tvPlayer1.setText(players[0]);
-        }
-        if (players[1] != null) {
-            tvPlayer2.setText(players[1]);
-        }
-        if (players[2] != null) {
-            tvPlayer3.setText(players[2]);
-        }
-        if (players[3] != null) {
-            tvPlayer4.setText(players[3]);
+        if (players != null) {
+            for (int i = 0; i < players.length; i++) {
+                tvList.get(i).setText(players[i]);
+            }
         }
 
         switch (spec) {
@@ -57,6 +59,14 @@ public class TileActivity extends AppCompatActivity {
                 layout.setBackgroundResource(R.drawable.red);
                 tvSpecText.setText(getResources().getString(R.string.red_details));
                 tvSpecText.setTextColor(getResources().getColor(R.color.white));
+                break;
+            case 0:
+                layout.setBackgroundResource(R.drawable.purple);
+                tvSpecText.setText(getString(R.string.start_tile_details));
+                break;
+            case 41:
+                layout.setBackgroundResource(R.drawable.purple);
+                tvSpecText.setText(getString(R.string.finish_tile_details));
                 break;
             default:
                 layout.setBackgroundResource(R.drawable.white);

@@ -56,7 +56,7 @@ public class QuizActivity extends AppCompatActivity {
         tvPlayerName.setText(PlayerManager.getActivePlayer().getName());
         tvQuestion.setText(question.getQuestion());
 
-        if (tileSpec == R.drawable.start_empty) {
+        if (tileSpec == R.drawable.start_empty || tileSpec == R.drawable.finish_empty) {
             tvQuestion.setBackground(getResources().getDrawable(R.drawable.white, null));
         } else {
             tvQuestion.setBackground(getResources().getDrawable(tileSpec, null));
