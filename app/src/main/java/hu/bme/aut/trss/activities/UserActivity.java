@@ -132,7 +132,7 @@ public class UserActivity extends AppCompatActivity {
                 for (int i = 0; i < playerList.size(); i++) {
                     Integer num = i + 1;
                     String name = getString(R.string.default_namebase) + num.toString();
-                    if (etList.get(i).getText().toString().equals("")) {
+                    if (etList.get(i).getText().toString().equals("") || etList.get(i).getText().toString().equals("\t") || etList.get(i).getText().toString().equals("\n")) {
                         etList.get(i).setText(name);
                         playerList.get(i).setName(name);
                     }
