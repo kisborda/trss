@@ -6,8 +6,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-import hu.bme.aut.trss.Loader;
 import hu.bme.aut.trss.R;
+import hu.bme.aut.trss.model.question.QuestionManager;
 
 /**
  * Kezdőképernyő activity-je. Fájlolvasás ekkor történik
@@ -18,7 +18,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Loader.readQuestions(getResources());
+        QuestionManager.loadQuestions(getResources());
 
         Button btnInit = findViewById(R.id.btnInit);
         btnInit.setOnClickListener(new View.OnClickListener() {

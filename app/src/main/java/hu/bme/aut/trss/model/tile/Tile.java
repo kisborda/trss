@@ -12,28 +12,32 @@ import hu.bme.aut.trss.model.player.Player;
  */
 public class Tile {
     private int tag;                        // imageview tag-je
-    private int spec;                       // resource id, R.drawable.[fájlnév]
+    private int resId;                      // resource id, R.drawable.[fájlnév]
     private ImageView imageView;            // ref a felületi elemre
     private List<Player> players;           // mezőn lévő játékosok
     private Tile nextTile;                  // következő mező
 
-    public Tile(int id, int spec, ImageView iv) {
+    public Tile(int id, int resId, ImageView iv) {
         this.tag = id;
-        this.spec = spec;
+        this.resId = resId;
         this.imageView = iv;
         players = new ArrayList<>();
+    }
+
+    public void setNextTile(Tile nextTile) {
+        this.nextTile = nextTile;
     }
 
     public Tile getNextTile() {
         return nextTile;
     }
 
-    public int getSpec() {
-        return spec;
+    public int getResId() {
+        return resId;
     }
 
-    public void setSpec(int spec) {
-        this.spec = spec;
+    public void setResId(int resId) {
+        this.resId = resId;
     }
 
     public ImageView getImageView() {
@@ -54,10 +58,6 @@ public class Tile {
 
     public void removePlayer(Player player) {
         players.remove(player);
-    }
-
-    public void setNextTile(Tile nextTile) {
-        this.nextTile = nextTile;
     }
 
     public Integer getTag() {

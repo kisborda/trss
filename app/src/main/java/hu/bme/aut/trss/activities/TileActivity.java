@@ -37,7 +37,7 @@ public class TileActivity extends AppCompatActivity {
         tvList.add(tvPlayer4);
 
         Intent intent = getIntent();
-        int spec = intent.getIntExtra(getResources().getString(R.string.spec), R.drawable.white);
+        int resId = intent.getIntExtra(getResources().getString(R.string.spec), R.drawable.white);
         String[] players = intent.getStringArrayExtra(getResources().getString(R.string.players));
 
         if (players != null) {
@@ -46,7 +46,7 @@ public class TileActivity extends AppCompatActivity {
             }
         }
 
-        switch (spec) {
+        switch (resId) {
             case R.drawable.pink:
                 layout.setBackgroundResource(R.drawable.pink);
                 tvSpecText.setText(getResources().getString(R.string.pink_details));

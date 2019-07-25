@@ -96,12 +96,12 @@ public class MapActivity extends AppCompatActivity {
         }
 
         // ehelyett mindre mehetne egy setspec, vagy megoldani, hogy ne legyen szükség erre a két sorra sem
-        map.get(0).setSpec(getStartOrFinishPicture(map.get(0)));
-        map.get(5).setSpec(getStartOrFinishPicture(map.get(5)));
+        map.get(0).setResId(getStartOrFinishPicture(map.get(0)));
+        map.get(5).setResId(getStartOrFinishPicture(map.get(5)));
 
         for (Tile tile : map) {
             tile.setNextTile(selectTile(tile.getTag() + 1));
-            tile.getImageView().setImageResource(tile.getSpec());
+            tile.getImageView().setImageResource(tile.getResId());
         }
 
         if (activeTile == null) {
@@ -119,7 +119,7 @@ public class MapActivity extends AppCompatActivity {
                 afterQuiz = true;
 
                 Intent intent = new Intent(MapActivity.this, QuizActivity.class);
-                intent.putExtra(getResources().getString(R.string.tile), activeTile.getSpec());
+                intent.putExtra(getResources().getString(R.string.tile), activeTile.getResId());
                 startActivity(intent);
             }
         });
@@ -137,7 +137,7 @@ public class MapActivity extends AppCompatActivity {
 
             /* van következő mező, ahova lehet lépni */
             if (activeTile.getNextTile() != null) {
-                int spec = activeTile.getSpec();
+                int spec = activeTile.getResId();
 
                 /* helyes válasz */
                 if (PlayerManager.getActivePlayer().isCorrect()) {
@@ -194,7 +194,9 @@ public class MapActivity extends AppCompatActivity {
         }
 
 
-        if (PlayerManager.players != null) {
+        /////////////////////////////////////////////////////////////////////////////////////////////
+        /* teszteléshez hasznos */
+        /*if (PlayerManager.players != null) {
             for (Player player : PlayerManager.players) {
                 String msg = player.getName() + "- mezőtag: " + player.getCurrentTile().getTag().toString();
                 Log.i(getString(R.string.log_tag), msg);
@@ -210,8 +212,8 @@ public class MapActivity extends AppCompatActivity {
             for (Player player : map.get(24).getPlayers()) {
                 Log.i(getString(R.string.log_tag), player.getName());
             }
-        }
-
+        }*/
+        /////////////////////////////////////////////////////////////////////////////////////////////
     }
 
     @Override
@@ -299,9 +301,9 @@ public class MapActivity extends AppCompatActivity {
      */
     private void setImageForActiveTile() {
         if (activeTile.getPlayers() == null) {
-            activeTile.getImageView().setImageResource(activeTile.getSpec());
+            activeTile.getImageView().setImageResource(activeTile.getResId());
         } else if (!activeTile.getPlayers().isEmpty()) {
-            switch (activeTile.getSpec()) {
+            switch (activeTile.getResId()) {
                 case R.drawable.white:
                     switch (activeTile.getPlayers().size()) {
                         case 2:
@@ -472,7 +474,7 @@ public class MapActivity extends AppCompatActivity {
             if (clickedTile.getTag().toString().equals(getString(R.string.startTile_tag)) || clickedTile.getTag().toString().equals(getString(R.string.finishTile_tag))) {
                 intent.putExtra(getResources().getString(R.string.spec), clickedTile.getTag());
             } else {
-                intent.putExtra(getResources().getString(R.string.spec), clickedTile.getSpec());
+                intent.putExtra(getResources().getString(R.string.spec), clickedTile.getResId());
             }
             String[] plyrs = null;
             if (clickedTile.getPlayers() != null) {
@@ -483,7 +485,6 @@ public class MapActivity extends AppCompatActivity {
             }
             intent.putExtra(getResources().getString(R.string.players), plyrs);
             startActivity(intent);
-
         }
     };
 }

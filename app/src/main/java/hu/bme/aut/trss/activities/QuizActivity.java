@@ -33,7 +33,7 @@ public class QuizActivity extends AppCompatActivity {
         setContentView(R.layout.activity_quiz);
 
         Intent intent = getIntent();
-        int tileSpec = intent.getIntExtra(getResources().getString(R.string.tile), R.drawable.white);
+        int tileResId = intent.getIntExtra(getResources().getString(R.string.tile), R.drawable.white);
 
         TextView tvQuestion = findViewById(R.id.tvQuestion);
         TextView tvPlayerName = findViewById(R.id.tvPlayerName);
@@ -56,10 +56,10 @@ public class QuizActivity extends AppCompatActivity {
         tvPlayerName.setText(PlayerManager.getActivePlayer().getName());
         tvQuestion.setText(question.getQuestion());
 
-        if (tileSpec == R.drawable.start_empty || tileSpec == R.drawable.finish_empty) {
+        if (tileResId == R.drawable.start_empty) {
             tvQuestion.setBackground(getResources().getDrawable(R.drawable.white, null));
         } else {
-            tvQuestion.setBackground(getResources().getDrawable(tileSpec, null));
+            tvQuestion.setBackground(getResources().getDrawable(tileResId, null));
         }
 
         btnA.setText(question.getA());
@@ -125,9 +125,6 @@ public class QuizActivity extends AppCompatActivity {
         }
     }
 
-    /**
-     * Kérdés megválaszolása előtt nem lehet visszalépni, válasz után is csak a visszagombbal
-     */
     @Override
     public void onBackPressed() {
         if (btnDone.isEnabled()) {
