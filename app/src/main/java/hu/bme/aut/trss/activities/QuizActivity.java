@@ -25,7 +25,7 @@ import hu.bme.aut.trss.model.question.QuestionManager;
 public class QuizActivity extends AppCompatActivity {
     private Button btnA, btnB, btnC, btnD, btnDone;
     private Map<String, Button> buttonsMap = new HashMap<>();
-    private final Question question = QuestionManager.getOneQuestion();
+    private Question question;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -34,6 +34,8 @@ public class QuizActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         int tileResId = intent.getIntExtra(getResources().getString(R.string.tile), R.drawable.white);
+
+        question = QuestionManager.getOneQuestion(tileResId);
 
         TextView tvQuestion = findViewById(R.id.tvQuestion);
         TextView tvPlayerName = findViewById(R.id.tvPlayerName);
@@ -44,53 +46,57 @@ public class QuizActivity extends AppCompatActivity {
         btnDone = findViewById(R.id.btnDone);
         btnDone.setEnabled(false);
 
-        buttonsMap.put(getString(R.string.A), btnA);
-        buttonsMap.put(getString(R.string.B), btnB);
-        buttonsMap.put(getString(R.string.C), btnC);
-        buttonsMap.put(getString(R.string.D), btnD);
-
-        if (PlayerManager.cheat) {
-            Toast.makeText(QuizActivity.this, question.getAnswer(), Toast.LENGTH_SHORT).show();
-        }
-
-        tvPlayerName.setText(PlayerManager.getActivePlayer().getName());
-        tvQuestion.setText(question.getQuestion());
-
-        if (tileResId == R.drawable.start_empty) {
-            tvQuestion.setBackground(getResources().getDrawable(R.drawable.white, null));
+        if (question == null) {
+            Toast.makeText(QuizActivity.this, getString(R.string.error_message), Toast.LENGTH_LONG).show();
         } else {
-            tvQuestion.setBackground(getResources().getDrawable(tileResId, null));
+            buttonsMap.put(getString(R.string.A), btnA);
+            buttonsMap.put(getString(R.string.B), btnB);
+            buttonsMap.put(getString(R.string.C), btnC);
+            buttonsMap.put(getString(R.string.D), btnD);
+
+            if (PlayerManager.cheat) {
+                Toast.makeText(QuizActivity.this, question.getAnswer(), Toast.LENGTH_SHORT).show();
+            }
+
+            tvPlayerName.setText(PlayerManager.getActivePlayer().getName());
+            tvQuestion.setText(question.getQuestion());
+
+            if (tileResId == R.drawable.start_empty) {
+                tvQuestion.setBackground(getResources().getDrawable(R.drawable.white, null));
+            } else {
+                tvQuestion.setBackground(getResources().getDrawable(tileResId, null));
+            }
+
+            btnA.setText(question.getA());
+            btnB.setText(question.getB());
+            btnC.setText(question.getC());
+            btnD.setText(question.getD());
+
+            btnA.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    questionAnswered(btnA);
+                }
+            });
+            btnB.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    questionAnswered(btnB);
+                }
+            });
+            btnC.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    questionAnswered(btnC);
+                }
+            });
+            btnD.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    questionAnswered(btnD);
+                }
+            });
         }
-
-        btnA.setText(question.getA());
-        btnB.setText(question.getB());
-        btnC.setText(question.getC());
-        btnD.setText(question.getD());
-
-        btnA.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                questionAnswered(btnA);
-            }
-        });
-        btnB.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                questionAnswered(btnB);
-            }
-        });
-        btnC.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                questionAnswered(btnC);
-            }
-        });
-        btnD.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                questionAnswered(btnD);
-            }
-        });
 
         btnDone.setOnClickListener(new View.OnClickListener() {
             @Override

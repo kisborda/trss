@@ -48,10 +48,11 @@
     <string name="wrong_answer">Rossz válasz</string>
     <string name="use_button_message">Használd a gombot</string>
     <string name="answer_question_message">Válaszold meg a kérdést!</string>
+    <string name="error_message">Nem sikerült kérdést betölteni. Indítsd újra az applikációt!</string>
 
     <!-- Mezők leírása -->
     <string name="pink_details">Ha ezen a mezőn válaszolsz rosszul egy kérdésre, eggyel hátrébb kerülsz a pályán</string>
-    <string name="greenish_details">Szerencséd van! Ha jól válaszolsz a kérdésre, hármat léphetsz előre</string>
+    <string name="greenish_details">Szerencséd van! Ha jól válaszolsz a kérdésre, hármat léphetsz előre. De még ha rosszul is válaszolsz, akkor is léphetsz egyet előre.\nEzért cserébe nehezebb kérdés is vár rád.</string>
     <string name="red_details">Ajjaj, ez itt egy piros mező. Ha helytelenül válaszolsz a kérdésre, kezdheted előlről a játékot.</string>
     <string name="white_details">Ez az alapértelmezett mező típus, nincs semmilyen befolyásoló tulajdonsága, ha jól válaszolsz, egyet léphetsz előre, ha rosszul válaszolsz, nem mozdulsz.</string>
     <string name="start_tile_details">Start mező.\nJó játékot!</string>

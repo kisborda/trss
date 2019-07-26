@@ -56,6 +56,7 @@ public class EndActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(EndActivity.this, MainActivity.class);
                 startActivity(intent);
+                finish();
             }
         });
     }

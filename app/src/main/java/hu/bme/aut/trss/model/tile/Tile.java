@@ -45,11 +45,7 @@ public class Tile {
     }
 
     public List<Player> getPlayers() {
-        if (players.size() == 0) {
-            return null;
-        } else {
-            return players;
-        }
+        return players;
     }
 
     public void addPlayer(Player player) {

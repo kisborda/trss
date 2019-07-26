@@ -167,12 +167,19 @@ public class MapActivity extends AppCompatActivity {
                 } else {        /* helytelen válasz */
                     activeTile.removePlayer(PlayerManager.getActivePlayer());
                     setImageForActiveTile();
-                    if (spec == R.drawable.pink) {
-                        activeTile = selectTile(activeTile.getTag() - 1);
+
+                    switch (spec) {
+                        case R.drawable.pink:
+                            activeTile = selectTile(activeTile.getTag() - 1);
+                            break;
+                        case R.drawable.red:
+                            activeTile = selectTile(Integer.parseInt(getString(R.string.startTile_tag)));
+                            break;
+                        case R.drawable.greenish:
+                            activeTile = activeTile.getNextTile();
+                            break;
                     }
-                    if (spec == R.drawable.red) {
-                        activeTile = selectTile(Integer.parseInt(getString(R.string.startTile_tag)));
-                    }
+
                     stepper(PlayerManager.getActivePlayer(), activeTile);
                     setImageForActiveTile();
                 }
@@ -206,11 +213,6 @@ public class MapActivity extends AppCompatActivity {
             for (Player player : PlayerManager.getFinishers()) {
                 String msg = player.getName() + "- mezőtag: " + player.getCurrentTile().getTag().toString();
                 Log.i(getString(R.string.log_tag), msg);
-            }
-        }
-        if (map.get(24).getPlayers() != null) {
-            for (Player player : map.get(24).getPlayers()) {
-                Log.i(getString(R.string.log_tag), player.getName());
             }
         }*/
         /////////////////////////////////////////////////////////////////////////////////////////////
@@ -279,7 +281,7 @@ public class MapActivity extends AppCompatActivity {
                 }
             }
         } else {
-            if (tile.getPlayers() == null) {
+            if (tile.getPlayers() == null || tile.getPlayers().isEmpty()) {
                 return R.drawable.finish_empty;
             } else {
                 switch (tile.getPlayers().size()) {

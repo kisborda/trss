@@ -154,6 +154,7 @@ public class UserActivity extends AppCompatActivity {
                 } else {
                     Intent intent = new Intent(UserActivity.this, MapActivity.class);
                     startActivity(intent);
+                    finish();
                 }
             }
         });

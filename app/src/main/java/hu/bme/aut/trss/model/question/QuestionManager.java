@@ -13,34 +13,57 @@ import java.util.Vector;
 
 import hu.bme.aut.trss.R;
 
-/* TODO QuestionManager osztályt felülvizsgálni:
-                használt/nem használt kérdésekkel kezdeni valamit, jelenleg hibaforrás
-                isLoaded függvény: mikor kell fájlból olvasni?
-*/
-
 /**
  * A kérdéseket tartja számon
  */
 public class QuestionManager {
-    private static List<Question> questions = new Vector<>();
-    private static List<Question> usedQuestions = new Vector<>();
+    private static List<Question> easyQuestions = new Vector<>();
+    private static List<Question> difficultQuestions = new Vector<>();
+    private static List<Question> usedEasyQuestions = new Vector<>();
+    private static List<Question> usedDifficultQuestions = new Vector<>();
 
     /**
-     * A következő kérdést választja ki
+     * A következő kérdést választja ki a kapott mező alapján.
+     * Szerencse mező esetén nehezebb kérdés, egyébként könnyebb.
      *
+     * @param resId Ehhez a mező típushoz tartozik a kérdés
      * @return Random sorsolt kérdés
      */
-    public static Question getOneQuestion() {
-        // azt is le kell kezelni ha az összes kérdés fel lett használva
-        // mivan ha üres a lista?
+    public static Question getOneQuestion(int resId) {
+        if (!isLoaded()) {
+            return null;
+        }
 
         Random rand = new Random();
-        int idx = rand.nextInt(questions.size());
 
-        usedQuestions.add(questions.remove(idx));
-        return usedQuestions.get(usedQuestions.size() - 1);
+        if (resId == R.drawable.greenish) {
+            if (difficultQuestions.isEmpty()) {
+                difficultQuestions = usedDifficultQuestions;
+                usedDifficultQuestions.clear();
+            }
+
+            int idx = rand.nextInt(difficultQuestions.size());
+
+            usedDifficultQuestions.add(difficultQuestions.remove(idx));
+            return usedDifficultQuestions.get(usedDifficultQuestions.size() - 1);
+        } else {
+            if (easyQuestions.isEmpty()) {
+                easyQuestions = usedEasyQuestions;
+                usedEasyQuestions.clear();
+            }
+
+            int idx = rand.nextInt(easyQuestions.size());
+
+            usedEasyQuestions.add(easyQuestions.remove(idx));
+            return usedEasyQuestions.get(usedEasyQuestions.size() - 1);
+        }
     }
 
+    /**
+     * Betölti fájlból a kérdéseket
+     *
+     * @param resources Erőforrások eléréséhez szükséges
+     */
     public static void loadQuestions(Resources resources) {
         if (!QuestionManager.isLoaded() && resources != null) {
 
@@ -51,7 +74,12 @@ public class QuestionManager {
             String line;
             try {
                 while ((line = bufferedReader.readLine()) != null) {
-                    questions.add(new Question(line.split(resources.getString(R.string.separator_in_file))));
+                    Question question = new Question(line.split(resources.getString(R.string.separator_in_file)));
+                    if (question.getDifficulty() < 10) {
+                        easyQuestions.add(question);
+                    } else {
+                        difficultQuestions.add(question);
+                    }
                 }
             } catch (IOException e) {
                 Log.i(resources.getString(R.string.log_tag), e.toString());
@@ -65,6 +93,6 @@ public class QuestionManager {
      * @return true ha legalább az egyik listában vannak elemek, egyébként false
      */
     private static Boolean isLoaded() {
-        return !questions.isEmpty() | !usedQuestions.isEmpty();
+        return !easyQuestions.isEmpty() | !usedEasyQuestions.isEmpty() | !difficultQuestions.isEmpty() | !usedDifficultQuestions.isEmpty();
     }
 }
