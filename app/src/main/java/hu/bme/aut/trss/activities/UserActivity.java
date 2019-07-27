@@ -163,6 +163,9 @@ public class UserActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+
+        Intent intent = new Intent(UserActivity.this, MainActivity.class);
+        startActivity(intent);
         finish();
     }
 

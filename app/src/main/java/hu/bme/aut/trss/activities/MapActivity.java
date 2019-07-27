@@ -224,6 +224,8 @@ public class MapActivity extends AppCompatActivity {
         Snackbar.make(findViewById(R.id.layout), getResources().getString(R.string.quit_message), Snackbar.LENGTH_LONG).setAction(getResources().getString(R.string.quit), new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent intent = new Intent(MapActivity.this, MainActivity.class);
+                startActivity(intent);
                 finish();
             }
         }).setActionTextColor(Color.RED).show();
@@ -265,35 +267,31 @@ public class MapActivity extends AppCompatActivity {
 
     // TODO getStartOrFinishPicture()-t valahogy beolvasztani a setImageForActiveTile() függvénybe
     private int getStartOrFinishPicture(Tile tile) {
-        if (tile.getTag().toString().equals("0")) {
-            if (tile.getPlayers() == null) {
-                return R.drawable.start_empty;
-            } else {
-                switch (tile.getPlayers().size()) {
-                    case 1:
-                        return R.drawable.start_1p;
-                    case 2:
-                        return R.drawable.start_2p;
-                    case 3:
-                        return R.drawable.start_3p;
-                    default:
-                        return R.drawable.start_4p;
-                }
+        if (tile.getTag().toString().equals(getString(R.string.startTile_tag))) {
+            switch (tile.getPlayers().size()) {
+                case 1:
+                    return R.drawable.start_1p;
+                case 2:
+                    return R.drawable.start_2p;
+                case 3:
+                    return R.drawable.start_3p;
+                case 4:
+                    return R.drawable.start_4p;
+                default:
+                    return R.drawable.start_empty;
             }
         } else {
-            if (tile.getPlayers() == null || tile.getPlayers().isEmpty()) {
-                return R.drawable.finish_empty;
-            } else {
-                switch (tile.getPlayers().size()) {
-                    case 1:
-                        return R.drawable.finish_1p;
-                    case 2:
-                        return R.drawable.finish_2p;
-                    case 3:
-                        return R.drawable.finish_3p;
-                    default:
-                        return R.drawable.finish_4p;
-                }
+            switch (tile.getPlayers().size()) {
+                case 1:
+                    return R.drawable.finish_1p;
+                case 2:
+                    return R.drawable.finish_2p;
+                case 3:
+                    return R.drawable.finish_3p;
+                case 4:
+                    return R.drawable.finish_4p;
+                default:
+                    return R.drawable.finish_empty;
             }
         }
     }
@@ -302,9 +300,9 @@ public class MapActivity extends AppCompatActivity {
      * Lépés után a mező "újrarajzolása", megfelelő játékosokkal stb
      */
     private void setImageForActiveTile() {
-        if (activeTile.getPlayers() == null) {
+        if (activeTile.getPlayers() == null || activeTile.getPlayers().isEmpty()) {
             activeTile.getImageView().setImageResource(activeTile.getResId());
-        } else if (!activeTile.getPlayers().isEmpty()) {
+        } else {
             switch (activeTile.getResId()) {
                 case R.drawable.white:
                     switch (activeTile.getPlayers().size()) {
@@ -317,7 +315,7 @@ public class MapActivity extends AppCompatActivity {
                         case 4:
                             activeTile.getImageView().setImageResource(R.drawable.white_4p);
                             break;
-                        default:
+                        case 1:
                             switch (activeTile.getPlayers().get(0).getResId()) {
                                 case R.drawable.black_player_white:
                                     activeTile.getImageView().setImageResource(R.drawable.black_player_white);
@@ -346,7 +344,7 @@ public class MapActivity extends AppCompatActivity {
                         case 4:
                             activeTile.getImageView().setImageResource(R.drawable.greenish_4p);
                             break;
-                        default:
+                        case 1:
                             switch (activeTile.getPlayers().get(0).getResId()) {
                                 case R.drawable.black_player_white:
                                     activeTile.getImageView().setImageResource(R.drawable.black_player_greenish);
@@ -375,7 +373,7 @@ public class MapActivity extends AppCompatActivity {
                         case 4:
                             activeTile.getImageView().setImageResource(R.drawable.pink_4p);
                             break;
-                        default:
+                        case 1:
                             switch (activeTile.getPlayers().get(0).getResId()) {
                                 case R.drawable.black_player_white:
                                     activeTile.getImageView().setImageResource(R.drawable.black_player_pink);
@@ -404,7 +402,7 @@ public class MapActivity extends AppCompatActivity {
                         case 4:
                             activeTile.getImageView().setImageResource(R.drawable.red_4p);
                             break;
-                        default:
+                        case 1:
                             switch (activeTile.getPlayers().get(0).getResId()) {
                                 case R.drawable.black_player_white:
                                     activeTile.getImageView().setImageResource(R.drawable.black_player_red);
