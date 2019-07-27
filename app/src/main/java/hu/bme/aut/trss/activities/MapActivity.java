@@ -95,10 +95,6 @@ public class MapActivity extends AppCompatActivity {
             }
         }
 
-        // ehelyett mindre mehetne egy setspec, vagy megoldani, hogy ne legyen szükség erre a két sorra sem
-        map.get(0).setResId(getStartOrFinishPicture(map.get(0)));
-        map.get(5).setResId(getStartOrFinishPicture(map.get(5)));
-
         for (Tile tile : map) {
             tile.setNextTile(selectTile(tile.getTag() + 1));
             tile.getImageView().setImageResource(tile.getResId());
@@ -147,9 +143,7 @@ public class MapActivity extends AppCompatActivity {
 
                     if (spec == R.drawable.greenish) {
                         for (int i = 0; i < 3; i++) {
-                            if (activeTile.getNextTile() != null) {                             // elvileg nem lehetne null Tile sehol, de nem merem kivenni, hátha elnéztem valamit
-                                activeTile = activeTile.getNextTile();
-                            }
+                            activeTile = activeTile.getNextTile();
                         }
                     } else {
                         activeTile = activeTile.getNextTile();
@@ -220,7 +214,6 @@ public class MapActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        // nincs ennél jobb?
         Snackbar.make(findViewById(R.id.layout), getResources().getString(R.string.quit_message), Snackbar.LENGTH_LONG).setAction(getResources().getString(R.string.quit), new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -265,10 +258,15 @@ public class MapActivity extends AppCompatActivity {
         return ret;
     }
 
-    // TODO getStartOrFinishPicture()-t valahogy beolvasztani a setImageForActiveTile() függvénybe
-    private int getStartOrFinishPicture(Tile tile) {
-        if (tile.getTag().toString().equals(getString(R.string.startTile_tag))) {
-            switch (tile.getPlayers().size()) {
+    /**
+     * A kezdő és cél mezők képeinek kiválasztása, a játékosok számának függvényében.
+     *
+     * @param startOrFinishTile Mező, amelyhez kell a kép
+     * @return A megfelelő kép erőforrás id-ja
+     */
+    private int getStartOrFinishPicture(Tile startOrFinishTile) {
+        if (startOrFinishTile.getTag().toString().equals(getString(R.string.startTile_tag))) {
+            switch (startOrFinishTile.getPlayers().size()) {
                 case 1:
                     return R.drawable.start_1p;
                 case 2:
@@ -281,7 +279,7 @@ public class MapActivity extends AppCompatActivity {
                     return R.drawable.start_empty;
             }
         } else {
-            switch (tile.getPlayers().size()) {
+            switch (startOrFinishTile.getPlayers().size()) {
                 case 1:
                     return R.drawable.finish_1p;
                 case 2:
