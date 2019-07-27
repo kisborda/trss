@@ -26,7 +26,7 @@ public class UserActivity extends AppCompatActivity {
     private RadioGroup rgPlayerCount;
     private RadioButton rbPlayerCount;
     private Integer playerCount;
-    private Button btnStart, btnOkay;
+    private Button btnStart, btnTest;
     private EditText etPlayerOneName, etPlayerTwoName, etPlayerThreeName, etPlayerFourName;
     private List<EditText> etList;
     private List<LinearLayout> layoutList;
@@ -70,46 +70,33 @@ public class UserActivity extends AppCompatActivity {
         rgPlayerCount = findViewById(R.id.rgPlayerCount);
 
         btnStart = findViewById(R.id.btnStart);
-        btnOkay = findViewById(R.id.btnOkay);
+        btnTest = findViewById(R.id.btnTest);
         btnStart.setEnabled(false);
-        btnOkay.setEnabled(false);
 
         rgPlayerCount.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 rbPlayerCount = findViewById(rgPlayerCount.getCheckedRadioButtonId());
 
-                btnOkay.setEnabled(true);
+                playerCount = Integer.parseInt(rbPlayerCount.getText().toString());
+
+                for (int i = 0; i < layoutList.size(); i++) {
+                    if (i < playerCount) {
+                        setViewAndChildrenEnabled(layoutList.get(i), true);
+                    } else {
+                        setViewAndChildrenEnabled(layoutList.get(i), false);
+                    }
+                }
+                btnStart.setEnabled(true);
             }
         });
 
-        btnOkay.setOnClickListener(new View.OnClickListener() {
+        btnTest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (btnOkay.getText().toString().equals(getResources().getString(R.string.btnOkay_text_next))) {
-                    btnOkay.setText(getResources().getString(R.string.back));
-                    btnStart.setEnabled(true);
-
-                    playerCount = Integer.parseInt(rbPlayerCount.getText().toString());
-
-                    setViewAndChildrenEnabled(rgPlayerCount, false);
-                    for (int i = 0; i < playerCount; i++) {
-                        setViewAndChildrenEnabled(layoutList.get(i), true);
-                    }
-                } else {
-                    if (!PlayerManager.cheat && etPlayerOneName.getText().toString().equals(getString(R.string.cheat))) {
-                        PlayerManager.cheat = true;
-                        Toast.makeText(UserActivity.this, getString(R.string.cheater_message), Toast.LENGTH_SHORT).show();
-                    }
-                    btnOkay.setText(getResources().getString(R.string.btnOkay_text_next));
-
-                    for (LinearLayout layout : layoutList) {
-                        setViewAndChildrenEnabled(layout, false);
-                    }
-
-                    setViewAndChildrenEnabled(rgPlayerCount, true);
-                    btnStart.setEnabled(false);
-                }
+                PlayerManager.cheat = true;
+                Toast.makeText(UserActivity.this, getString(R.string.cheater_message), Toast.LENGTH_SHORT).show();
+                btnTest.setEnabled(false);
             }
         });
 

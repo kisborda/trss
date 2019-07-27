@@ -39,6 +39,7 @@ public class QuizActivity extends AppCompatActivity {
 
         TextView tvQuestion = findViewById(R.id.tvQuestion);
         TextView tvPlayerName = findViewById(R.id.tvPlayerName);
+        TextView tvTurn = findViewById(R.id.tvTurn);
         btnA = findViewById(R.id.btnA);
         btnB = findViewById(R.id.btnB);
         btnC = findViewById(R.id.btnC);
@@ -59,6 +60,7 @@ public class QuizActivity extends AppCompatActivity {
             }
 
             tvPlayerName.setText(PlayerManager.getActivePlayer().getName());
+            tvTurn.setText(PlayerManager.getTurn());
             tvQuestion.setText(question.getQuestion());
 
             if (tileResId == R.drawable.start_empty) {

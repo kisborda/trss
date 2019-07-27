@@ -11,6 +11,7 @@ public class PlayerManager {
     private static int activePlayerIndex = 0;               // a listában való indexe
     private static List<Player> finished;                   // célbaért játékosok
     public static boolean cheat = false;
+    private static Integer turn = 1;
 
     /**
      * Aktív játékost adja meg.
@@ -28,6 +29,7 @@ public class PlayerManager {
         activePlayerIndex++;
         if (activePlayerIndex >= players.size()) {
             activePlayerIndex = 0;
+            turn++;
         }
     }
 
@@ -60,5 +62,9 @@ public class PlayerManager {
      */
     public static List<Player> getFinishers() {
         return finished;
+    }
+
+    public static String getTurn() {
+        return turn.toString();
     }
 }

@@ -2,7 +2,7 @@
     <string name="app_name">Trss</string>
 
     <!-- gombok -->
-    <string name="btnOkay_text_next">Tovább</string>
+    <string name="btnTest_text">Csalás aktiválása</string>
     <string name="back">Vissza</string>
     <string name="btnQuestion_text">Kérdés</string>
     <string name="quit">Kilépés</string>
@@ -23,6 +23,7 @@
     <string name="players_on_tile">Mezőn lévő játékosok:</string>
     <string name="players_on_tile_default_text">Senki sincs ezen a mezőn</string>
     <string name="number_of_players">Játékosok száma:</string>
+    <string name="turn">Forduló:</string>
 
     <!-- játékosszám (radiobutton) -->
     <string name="_4">4</string>

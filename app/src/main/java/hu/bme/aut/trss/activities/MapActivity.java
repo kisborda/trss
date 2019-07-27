@@ -28,7 +28,7 @@ import hu.bme.aut.trss.model.tile.Tile;
 public class MapActivity extends AppCompatActivity {
     private List<Tile> map = new ArrayList<>();
     private Object tag;
-    private TextView tvPlayerName;
+    private TextView tvPlayerName, tvTurn;
     private Tile activeTile = null;
     private boolean afterQuiz = false;
     private boolean end = false;
@@ -61,6 +61,7 @@ public class MapActivity extends AppCompatActivity {
         greenishes.add(38);
 
         tvPlayerName = findViewById(R.id.tvActivePlayer);
+        tvTurn = findViewById(R.id.tvTurn);
 
         Button btnNext = findViewById(R.id.btnNext);
         TableLayout playground = findViewById(R.id.map);
@@ -192,6 +193,7 @@ public class MapActivity extends AppCompatActivity {
             map.get(0).getImageView().setImageResource(getStartOrFinishPicture(map.get(0)));
             map.get(5).getImageView().setImageResource(getStartOrFinishPicture(map.get(5)));
             tvPlayerName.setText(PlayerManager.getActivePlayer().getName());
+            tvTurn.setText(PlayerManager.getTurn());
         }
 
 

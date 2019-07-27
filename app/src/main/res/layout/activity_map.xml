@@ -6,14 +6,40 @@
     android:background="#e6f7ff"
     android:orientation="vertical">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="10dp"
-        android:text="@string/active_player"
-        android:textAllCaps="false"
-        android:textSize="20sp" />
+        android:layout_marginTop="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:text="@string/active_player"
+            android:textAllCaps="false"
+            android:textSize="20sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="end">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="5dp"
+                android:text="@string/turn"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/tvTurn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="20dp"
+                android:text=""
+                android:textSize="20sp" />
+        </LinearLayout>
+    </LinearLayout>
 
     <TextView
         android:id="@+id/tvActivePlayer"
@@ -24,6 +50,7 @@
         android:textAllCaps="false"
         android:textSize="20sp"
         android:textStyle="bold" />
+
 
     <LinearLayout
         android:id="@+id/layout"
